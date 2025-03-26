@@ -26,7 +26,7 @@ final GoRouter router = GoRouter(
           builder: (context, state) => HomeScreen(),
           routes: [
             GoRoute(
-              path: 'postDetail', // Nested under /home
+              path: 'postDetail',
               builder: (context, state) {
                 final post = state.extra as Post;
                 return PostDetailScreen(post: post);

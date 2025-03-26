@@ -26,11 +26,11 @@ class CustomDrawer extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   radius: 30, // Adjust size of avatar here
-                  backgroundImage: AssetImage(profile.profileImageUrl),
+                  backgroundImage: AssetImage(profile.profile.profileImageUrl),
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  profile.name,
+                  profile.profile.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -38,7 +38,7 @@ class CustomDrawer extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  '@${profile.username}',
+                  '@${profile.profile.username}',
                   style: TextStyle(color: Colors.grey[600]),
                 ),
                 const SizedBox(height: 10),
@@ -46,13 +46,13 @@ class CustomDrawer extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '${profile.following}',
+                      '${profile.profile.following}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const Text(' Following'),
                     const SizedBox(width: 20),
                     Text(
-                      '${profile.followers}',
+                      '${profile.profile.followers}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const Text(' Followers'),
