@@ -4,6 +4,7 @@ class AppTheme {
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
     primarySwatch: Colors.blue,
+    primaryColor: Colors.blue, // Twitter-like blue
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
@@ -23,6 +24,7 @@ class AppTheme {
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: Colors.blue,
+    primaryColor: Colors.blue, // Twitter-like blue
     scaffoldBackgroundColor: Colors.black,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.black,

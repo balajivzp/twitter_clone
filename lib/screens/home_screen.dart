@@ -4,9 +4,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/provider/posts_provider.dart';
 import 'package:twitter_clone/screens/widgets/post_item.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Delay the getPosts method for both providersx
+    Future(() {
+      ref.read(postsProvider.notifier).getPosts();
+      ref.read(followingPostsProvider.notifier).getPosts();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final forYouPosts = ref.watch(postsProvider);
     final followingPosts = ref.watch(followingPostsProvider);
 
@@ -29,19 +44,26 @@ class HomeScreen extends ConsumerWidget {
         ),
         body: TabBarView(
           children: [
-            // "For You" Tab
-            ListView.builder(
-              itemCount: forYouPosts.length,
-              itemBuilder: (context, index) {
-                return PostItem(post: forYouPosts[index]);
-              },
+            forYouPosts.when(
+              data: (posts) => ListView.builder(
+                itemCount: posts.length,
+                itemBuilder: (context, index) {
+                  return PostItem(post: posts[index]);
+                },
+              ),
+              loading: () => Center(child: CircularProgressIndicator()),
+              error: (error, stack) => Center(child: Text('Error: $error')),
             ),
             // "Following" Tab
-            ListView.builder(
-              itemCount: followingPosts.length,
-              itemBuilder: (context, index) {
-                return PostItem(post: followingPosts[index]);
-              },
+            followingPosts.when(
+              data: (posts) => ListView.builder(
+                itemCount: posts.length,
+                itemBuilder: (context, index) {
+                  return PostItem(post: posts[index]);
+                },
+              ),
+              loading: () => Center(child: CircularProgressIndicator()),
+              error: (error, stack) => Center(child: Text('Error: $error')),
             ),
           ],
         ),
