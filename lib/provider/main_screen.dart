@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/common/app_drawer.dart';
 import 'package:twitter_clone/common/custom_app_bar.dart';
 import 'package:twitter_clone/provider/bottom_nav_tab.dart';
+import 'package:twitter_clone/screens/communities_screen.dart';
+import 'package:twitter_clone/screens/home_screen.dart';
+import 'package:twitter_clone/screens/inbox_screen.dart';
+import 'package:twitter_clone/screens/notifications_screen.dart';
+import 'package:twitter_clone/screens/post_screen.dart';
+import 'package:twitter_clone/screens/search_screen.dart';
 
 class BottomNavController extends StateNotifier<BottomNavTab> {
   BottomNavController() : super(BottomNavTab.home);
@@ -30,33 +35,24 @@ class MainScreen extends ConsumerWidget {
     void _onItemTapped(int index) {
       final tab = BottomNavTab.values[index];
       ref.read(bottomNavProvider.notifier).updateTab(tab);
-
-      switch (tab) {
-        case BottomNavTab.home:
-          context.go('/home');
-          break;
-        case BottomNavTab.search:
-          context.go('/search');
-          break;
-        case BottomNavTab.post:
-          context.go('/post');
-          break;
-        case BottomNavTab.notifications:
-          context.go('/notifications');
-          break;
-        case BottomNavTab.communities:
-          context.go('/communities');
-          break;
-        case BottomNavTab.inbox:
-          context.go('/inbox');
-          break;
-      }
     }
+
+    final screens = [
+      HomeScreen(),
+      const SearchScreen(),
+      const PostScreen(),
+      const NotificationsScreen(),
+      const CommunitiesScreen(),
+      const InboxScreen(),
+    ];
 
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: CustomDrawer(),
-      body: child,
+      body: IndexedStack(
+        index: BottomNavTab.values.indexOf(currentTab),
+        children: screens,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: BottomNavTab.values.indexOf(currentTab),
         onTap: _onItemTapped,
