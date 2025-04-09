@@ -13,8 +13,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Delay the getPosts method for both providersx
-    Future(() {
+    // Delay the getPosts method for both providers
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(postsProvider.notifier).getPosts();
       ref.read(followingPostsProvider.notifier).getPosts();
     });

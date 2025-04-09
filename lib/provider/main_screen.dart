@@ -32,7 +32,7 @@ class MainScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentTab = ref.watch(bottomNavProvider);
 
-    void _onItemTapped(int index) {
+    void onItemTapped(int index) {
       final tab = BottomNavTab.values[index];
       ref.read(bottomNavProvider.notifier).updateTab(tab);
     }
@@ -47,15 +47,15 @@ class MainScreen extends ConsumerWidget {
     ];
 
     return Scaffold(
-      appBar: CustomAppBar(),
-      drawer: CustomDrawer(),
+      appBar: const CustomAppBar(),
+      drawer: const CustomDrawer(),
       body: IndexedStack(
         index: BottomNavTab.values.indexOf(currentTab),
         children: screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: BottomNavTab.values.indexOf(currentTab),
-        onTap: _onItemTapped,
+        onTap: onItemTapped,
         items: BottomNavTab.values.map((tab) {
           return BottomNavigationBarItem(
             icon: Icon(tab.icon),
